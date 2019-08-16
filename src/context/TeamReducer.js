@@ -3,16 +3,18 @@ export default (state, action) => {
     case "CHANGE_TEAM":
       return [...state, { name: action.payload }];
     case "ADD_PLAYER":
-      console.log(action.payload);
       let tempAddArray = [...state.players, action.payload];
-      return [...state, { players: tempAddArray }];
+      return { ...state, players: tempAddArray };
     case "REMOVE_PLAYER":
-      return state.filter((_, index) => index !== action.payload);
+      return {
+        ...state,
+        players: state.players.filter(value => value.id !== action.payload)
+      };
     case "ROTATE_PLAYERS":
-      return [...state];
+      return [state];
     case "REORDER_PLAYER":
       let tempReorderArray = [...state.players];
-      return [...state, { players: tempReorderArray }];
+      return { ...state, players: tempReorderArray };
     case "ASSESS_LINEUP":
       return [...state];
     case "GET_PLAYERS":

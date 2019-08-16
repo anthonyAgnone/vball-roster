@@ -1,13 +1,20 @@
 import React, { useState, useContext } from "react";
 import { TeamDispatch } from "../../App";
 import { AddPlayerForm } from "./assets/StyledElements";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faIdBadge } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const PlayerForm = () => {
+library.add(faIdBadge);
+
+const PlayerForm = props => {
   const dispatch = useContext(TeamDispatch);
+
   const [form, setForm] = useState({
     name: "",
     id: "",
     gender: "",
+    position: "",
     swappable: true,
     str: "",
     weak: ""
@@ -15,12 +22,14 @@ const PlayerForm = () => {
 
   const handleAddPlayer = e => {
     e.preventDefault();
-    setForm(form => ({
-      ...form,
-      id: form.name.slice(0, 2) + generateRandomID(5)
-    }));
     if (form.name.length > 0 && form.gender.length > 0) {
-      dispatch({ type: "ADD_PLAYER", payload: form });
+      dispatch({
+        type: "ADD_PLAYER",
+        payload: {
+          ...form,
+          id: form.name.slice(0, 2) + generateRandomID(5)
+        }
+      });
     }
   };
 
@@ -46,13 +55,35 @@ const PlayerForm = () => {
     return result;
   };
 
+  const [isMenuOpen, setOpen] = useState(props.app.isOpen);
+
   return (
-    <AddPlayerForm id="playerForm" onSubmit={handleAddPlayer}>
-      <input type="text" id="name" name="name" onChange={handleChange} />
+    <AddPlayerForm
+      id="playerForm"
+      onSubmit={handleAddPlayer}
+      isOpen={isMenuOpen}>
+      <h1 className="menuOpen" onClick={() => setOpen(prevState => !prevState)}>
+        <FontAwesomeIcon icon="id-badge" />
+      </h1>
+      <h1>Add a Player</h1>
+      <input
+        type="text"
+        id="name"
+        name="name"
+        onChange={handleChange}
+        placeholder="name"
+      />
       <select id="gender" name="gender" onChange={handleChange}>
         <option>Choose a gender</option>
         <option value="m">Male</option>
         <option value="f">Female</option>
+      </select>
+
+      <select id="position" name="position" onChange={handleChange}>
+        <option>Choose a Position</option>
+        <option value="s">Setter</option>
+        <option value="mh">Middle Hitter</option>
+        <option value="oh">Outside Hitter</option>
       </select>
 
       <div className="checkbox">
