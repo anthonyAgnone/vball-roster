@@ -40,5 +40,6 @@ export const ListItem = styled.li`
     padding: 5px;
     border-radius: 50%;
     color: #fff;
+    cursor: grab;
   }
 `;

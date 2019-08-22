@@ -33,17 +33,6 @@ export const OnCourt = styled.div`
   }
 `;
 
-export const OnBench = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 20vw;
-  justify-content: center;
-  align-items: center;
-  h2 {
-    align-self: flex-start;
-  }
-`;
-
 export const Player = styled.div`
   display: flex;
   position: relative;
@@ -68,6 +57,56 @@ export const Player = styled.div`
     left: 50%;
     transform: translateX(-50%);
     background: transparent;
+    border: 1px solid #000;
+    padding: 2px 5px;
+    margin: 0;
+    background: red;
+    color: #fff;
+    cursor: pointer;
+    :hover {
+      background: #fff;
+      color: red;
+    }
+  }
+  :hover {
+    button {
+      display: block;
+    }
+  }
+`;
+
+export const OnBench = styled.div`
+  width: 50%;
+`;
+
+export const BenchList = styled.ul`
+  width: 100%;
+  text-align: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+`;
+
+export const BenchPlayer = styled.div`
+  position: relative;
+  flex-direction: column;
+  border-bottom: 1px solid #ccc;
+  border-top: 1px solid #333;
+  border-left: 2px solid #000;
+  border-right: 2px solid #000;
+  padding: 0.2em;
+  color: ${props => (props.swappable ? "#fffadd" : "#ffffff")};
+  background-color: ${props => positionColor(props.position)};
+  transition: all 0.6s ease-in-out;
+  p {
+    margin: 0;
+    padding: 0;
+  }
+  button {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
     border: 1px solid #000;
     padding: 2px 5px;
     margin: 0;

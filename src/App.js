@@ -62,9 +62,19 @@ const App = () => {
       },
       {
         name: "Ted",
-        id: "0",
+        id: "6",
         gender: "m",
         position: "oh",
+        swappable: true,
+        str: "",
+        weak: ""
+      },
+      ,
+      {
+        name: "New Guy",
+        id: "7",
+        gender: "m",
+        position: "mh",
         swappable: true,
         str: "",
         weak: ""

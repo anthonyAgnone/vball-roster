@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const TeamDiv = styled.div`
-  position: absolute;
+  position: fixed;
   top: 0;
   right: 0;
   transition: all 0.3s ease-in-out;

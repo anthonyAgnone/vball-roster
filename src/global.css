@@ -1,5 +1,7 @@
-html, body {
-  overflow: hidden;
+html,
+body {
+  overflow-x: hidden;
+  box-sizing: border-box;
 }
 
 body {
