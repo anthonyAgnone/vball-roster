@@ -14,6 +14,27 @@ const Home = ({ team: { teamName, players } }) => {
     { x: 0, y: 0 }
   ]);
 
+  const [rotation, setRotation] = useState(0);
+
+  const rotationOne = [
+    [
+      { x: -40, y: -20 },
+      { x: -270, y: 150 },
+      { x: -290, y: 150 },
+      { x: -20, y: -50 },
+      { x: 130, y: 70 },
+      { x: 160, y: 70 }
+    ],
+    [
+      { x: 500, y: -20 },
+      { x: -340, y: 100 },
+      { x: -340, y: 100 },
+      { x: -20, y: -50 },
+      { x: 130, y: 70 },
+      { x: 160, y: 70 }
+    ]
+  ];
+
   const rotationTwo = [
     [
       { x: -20, y: 130 },
@@ -33,6 +54,25 @@ const Home = ({ team: { teamName, players } }) => {
     ]
   ];
 
+  const rotationThree = [
+    [
+      { x: 0, y: 140 },
+      { x: 0, y: 140 },
+      { x: 20, y: -15 },
+      { x: 0, y: -60 },
+      { x: 150, y: 70 },
+      { x: 140, y: 70 }
+    ],
+    [
+      { x: -40, y: 100 },
+      { x: -40, y: 100 },
+      { x: -130, y: 0 },
+      { x: 0, y: -60 },
+      { x: 150, y: 70 },
+      { x: 140, y: 70 }
+    ]
+  ];
+
   const handleUpdateState = val => {
     let initialState = [...state];
     switch (val) {
@@ -44,10 +84,14 @@ const Home = ({ team: { teamName, players } }) => {
         changeState(initialState);
         break;
       case 1:
-        changeState(rotationTwo[0]);
+        if (rotation === 0 || rotation === 3) changeState(rotationOne[0]);
+        else if (rotation === 1 || rotation === 4) changeState(rotationTwo[0]);
+        else changeState(rotationThree[0]);
         break;
       case 2:
-        changeState(rotationTwo[1]);
+        if (rotation === 0 || rotation === 3) changeState(rotationOne[1]);
+        else if (rotation === 1 || rotation === 4) changeState(rotationTwo[1]);
+        else changeState(rotationThree[1]);
         break;
       default:
         return val;
@@ -60,7 +104,8 @@ const Home = ({ team: { teamName, players } }) => {
 
   const handleRotate = () => {
     dispatch({ type: "ROTATE_PLAYERS", payload: "" });
-    console.log(state[1].x);
+    if (rotation === 5) setRotation(0);
+    else setRotation(rotation + 1);
   };
 
   const handlePosition = val => {
@@ -79,6 +124,7 @@ const Home = ({ team: { teamName, players } }) => {
   return (
     <div>
       <h1>{teamName ? teamName : "Enter Team Name"}</h1>
+      <h2>Rotation {rotation + 1}</h2>
 
       <h1>On Court</h1>
       <OnCourt>

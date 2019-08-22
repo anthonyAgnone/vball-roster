@@ -11,7 +11,9 @@ export default (state, action) => {
         players: state.players.filter(value => value.id !== action.payload)
       };
     case "ROTATE_PLAYERS":
-      return [state];
+      let tempArray = [...state.players];
+      tempArray.unshift(tempArray.pop());
+      return { ...state, players: tempArray };
     case "REORDER_PLAYER":
       let tempReorderArray = [...state.players];
       return { ...state, players: tempReorderArray };

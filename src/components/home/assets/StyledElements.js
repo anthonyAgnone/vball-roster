@@ -21,7 +21,8 @@ export const OnCourt = styled.div`
   border: 2px solid #000;
   border-top-width: 6px;
   position: relative;
-  :after {
+  :before {
+    z-index: -1;
     position: absolute;
     top: 33%;
     content: "";
