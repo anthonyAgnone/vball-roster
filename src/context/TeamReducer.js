@@ -1,7 +1,7 @@
 export default (state, action) => {
   switch (action.type) {
     case "CHANGE_TEAM":
-      return [...state, { name: action.payload }];
+      return { ...state, name: action.payload };
     case "ADD_PLAYER":
       let tempAddArray = [...state.players, action.payload];
       return { ...state, players: tempAddArray };

@@ -4,6 +4,7 @@ import { AddPlayerForm } from "./assets/StyledElements";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faIdBadge } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import TeamSetup from "../teamSetup/TeamSetup";
 
 library.add(faIdBadge);
 
@@ -55,6 +56,16 @@ const PlayerForm = props => {
     return result;
   };
 
+  const handleTeamName = name => {
+    dispatch({
+      type: "CHANGE_TEAM",
+      payload: {
+        name
+      }
+    });
+    console.log(props.team.name);
+  };
+
   const [isMenuOpen, setOpen] = useState(props.app.isOpen);
 
   return (
@@ -65,6 +76,7 @@ const PlayerForm = props => {
       <h1 className="menuOpen" onClick={() => setOpen(prevState => !prevState)}>
         <FontAwesomeIcon icon="id-badge" />
       </h1>
+      <TeamSetup changeTeamName={handleTeamName} team={props.team} />
       <h1>Add a Player</h1>
       <input
         type="text"

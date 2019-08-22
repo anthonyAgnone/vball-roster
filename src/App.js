@@ -78,7 +78,7 @@ const App = () => {
     <div className="app">
       <AppDispatch.Provider value={appDispatch}>
         <TeamDispatch.Provider value={teamDispatch}>
-          <PlayerForm app={app} />
+          <PlayerForm app={app} team={team} />
           <Switch>
             <Route path="/" exact>
               {({ match }) => <Home team={team} show={match !== null} />}
