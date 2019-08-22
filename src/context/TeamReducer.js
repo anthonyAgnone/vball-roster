@@ -1,7 +1,8 @@
 export default (state, action) => {
   switch (action.type) {
     case "CHANGE_TEAM":
-      return { ...state, name: action.payload };
+      let tempState = action.payload;
+      return tempState;
     case "ADD_PLAYER":
       let tempAddArray = [...state.players, action.payload];
       return { ...state, players: tempAddArray };
@@ -15,7 +16,7 @@ export default (state, action) => {
       tempArray.unshift(tempArray.pop());
       return { ...state, players: tempArray };
     case "REORDER_PLAYER":
-      let tempReorderArray = [...state.players];
+      let tempReorderArray = action.payload;
       return { ...state, players: tempReorderArray };
     case "ASSESS_LINEUP":
       return [...state];

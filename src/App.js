@@ -3,7 +3,8 @@ import { Route, Switch } from "react-router-dom";
 import Home from "./components/home/Home";
 import TeamReducer from "./context/TeamReducer";
 import AppReducer from "./context/AppReducer";
-import PlayerForm from "./components/playerForm/PlayerForm";
+import TeamManagement from "./components/teamManagement/TeamManagement";
+
 import "./global.css";
 
 export const TeamDispatch = createContext(null);
@@ -12,6 +13,7 @@ export const AppDispatch = createContext(null);
 const App = () => {
   const [team, teamDispatch] = useReducer(TeamReducer, {
     teamName: "",
+    offense: "i42",
     players: [
       {
         name: "Anthony",
@@ -78,7 +80,7 @@ const App = () => {
     <div className="app">
       <AppDispatch.Provider value={appDispatch}>
         <TeamDispatch.Provider value={teamDispatch}>
-          <PlayerForm app={app} team={team} />
+          <TeamManagement team={team} app={app} />
           <Switch>
             <Route path="/" exact>
               {({ match }) => <Home team={team} show={match !== null} />}

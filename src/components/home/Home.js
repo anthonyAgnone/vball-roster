@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { OnBench, OnCourt, Player } from "./assets/StyledElements";
 import { TeamDispatch } from "../../App";
 
-const Home = ({ team: { teamName, players } }) => {
+const Home = ({ team: { teamName, offense, players } }) => {
   const dispatch = useContext(TeamDispatch);
 
   const [state, changeState] = useState([
@@ -121,10 +121,26 @@ const Home = ({ team: { teamName, players } }) => {
     }
   };
 
+  const handleOffense = val => {
+    switch (val) {
+      case "i42":
+        return "International 4-2";
+      case "t42":
+        return "Coming Soon";
+      case "51":
+        return "Coming Soon";
+      case "62":
+        return "Coming Soon";
+    }
+  };
+
+  const currentOffense = handleOffense(offense);
+
   return (
     <div>
       <h1>{teamName ? teamName : "Enter Team Name"}</h1>
-      <h2>Rotation {rotation + 1}</h2>
+      <h2>{currentOffense}</h2>
+      <h3>Rotation {rotation + 1}</h3>
 
       <h1>On Court</h1>
       <OnCourt>
