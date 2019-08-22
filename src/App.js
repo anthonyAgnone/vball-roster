@@ -14,11 +14,56 @@ const App = () => {
     teamName: "",
     players: [
       {
-        name: "Anthony",
+        name: "Ted",
         id: "0",
+        gender: "m",
+        position: "oh",
+        swappable: true,
+        str: "",
+        weak: ""
+      },
+      {
+        name: "Anthony",
+        id: "1",
         gender: "m",
         position: "s",
         swappable: false,
+        str: "",
+        weak: ""
+      },
+      {
+        name: "Nephier",
+        id: "2",
+        gender: "m",
+        position: "mh",
+        swappable: true,
+        str: "",
+        weak: ""
+      },
+      {
+        name: "Bridget",
+        id: "3",
+        gender: "f",
+        position: "oh",
+        swappable: false,
+        str: "",
+        weak: ""
+      },
+      {
+        name: "Serena",
+        id: "4",
+        gender: "f",
+        position: "s",
+        swappable: false,
+        str: "",
+        weak: ""
+      },
+      {
+        name: "Jon",
+        id: "5",
+        gender: "m",
+        position: "mh",
+        swappable: true,
         str: "",
         weak: ""
       }

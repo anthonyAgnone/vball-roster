@@ -8,10 +8,10 @@ export const AddPlayerForm = styled.form`
   transform: translateX(${props => props.isOpen ? 0 : '100%'});
   height: 100vh;
   border-left: 1px solid #000;
-  padding: 2em 1em;
   display: flex;
   flex-direction: column;
   width: 20vw;
+  padding: 0 1em;
   input,
   select {
     margin-bottom: 2em;

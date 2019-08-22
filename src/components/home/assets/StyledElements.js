@@ -6,6 +6,9 @@ export const OnCourt = styled.div`
   grid-template-columns: repeat(3, 1fr);
   grid-auto-flow: dense;
   grid-gap: 4em;
+  grid-row-gap: 50%;
+  padding-bottom: 200px;
+  padding-top: 25px;
   div:nth-child(4) {
     grid-column: 3;
   }
@@ -14,6 +17,18 @@ export const OnCourt = styled.div`
   }
   div:nth-child(6) {
     grid-column: 1;
+  }
+  border: 2px solid #000;
+  border-top-width: 6px;
+  position: relative;
+  :after {
+    position: absolute;
+    top: 33%;
+    content: "";
+    left: 0;
+    height: 3px;
+    width: 100%;
+    background: rgba(24, 141, 165, 1);
   }
 `;
 
@@ -34,11 +49,13 @@ export const Player = styled.div`
   flex-direction: column;
   border: 1px solid #000;
   padding: 2em;
-  color: ${props => (props.swappable ? "red" : "black")};
+  color: ${props => (props.swappable ? "#fffadd" : "#ffffff")};
   margin: 0 auto;
   justify-content: center;
   align-items: center;
   border-radius: 50%;
+  background-color: ${props => positionColor(props.position)};
+  transition: all 0.6s ease-in-out;
   p {
     margin: 0;
     padding: 0;
@@ -67,3 +84,16 @@ export const Player = styled.div`
     }
   }
 `;
+
+const positionColor = pos => {
+  switch (pos) {
+    case "s":
+      return "#DC5D49";
+    case "mh":
+      return "#561D25";
+    case "oh":
+      return "#188DA5";
+    default:
+      return pos;
+  }
+};
