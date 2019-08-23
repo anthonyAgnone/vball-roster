@@ -4,6 +4,10 @@ export default (state, action) => {
       let tempState = action.payload;
       return tempState;
     case "ADD_PLAYER":
+      if (state.players.length > 5) {
+        let tempAddArray = [...state.playersOnBench, action.payload];
+        return { ...state, playersOnBench: tempAddArray };
+      }
       let tempAddArray = [...state.players, action.payload];
       return { ...state, players: tempAddArray };
     case "REMOVE_PLAYER":
@@ -11,10 +15,36 @@ export default (state, action) => {
         ...state,
         players: state.players.filter(value => value.id !== action.payload)
       };
+    case "REMOVE_BENCH_PLAYER":
+      return {
+        ...state,
+        playersOnBench: state.playersOnBench.filter(
+          value => value.id !== action.payload
+        )
+      };
     case "ROTATE_PLAYERS":
       let tempArray = [...state.players];
       tempArray.unshift(tempArray.pop());
-      return { ...state, players: tempArray };
+      const rotateOut = tempArray[3];
+      console.log(rotateOut);
+      if (rotateOut.swappable) {
+        const tempBenchArray = [...state.playersOnBench];
+        const rotateIn = tempBenchArray[0];
+        rotateIn.position = rotateOut.position;
+        tempArray[3] = rotateIn;
+        tempBenchArray.push(rotateOut);
+        tempBenchArray.shift();
+        return {
+          ...state,
+          players: tempArray,
+          playersOnBench: tempBenchArray
+        };
+      }
+      return {
+        ...state,
+        players: tempArray
+      };
+
     case "REORDER_PLAYER":
       let tempReorderArray = action.payload;
       return { ...state, players: tempReorderArray };

@@ -8,7 +8,7 @@ import {
 } from "./assets/StyledElements";
 import { TeamDispatch } from "../../App";
 
-const Home = ({ team: { teamName, offense, players } }) => {
+const Home = ({ team: { teamName, offense, players, playersOnBench } }) => {
   const dispatch = useContext(TeamDispatch);
 
   const [state, changeState] = useState([
@@ -108,6 +108,10 @@ const Home = ({ team: { teamName, offense, players } }) => {
     dispatch({ type: "REMOVE_PLAYER", payload: i });
   };
 
+  const handleBenchDelete = i => {
+    dispatch({ type: "REMOVE_BENCH_PLAYER", payload: i });
+  };
+
   const handleRotate = () => {
     dispatch({ type: "ROTATE_PLAYERS" });
     if (rotation === 5) setRotation(0);
@@ -137,6 +141,8 @@ const Home = ({ team: { teamName, offense, players } }) => {
         return "Coming Soon";
       case "62":
         return "Coming Soon";
+      default:
+        return val;
     }
   };
 
@@ -150,45 +156,37 @@ const Home = ({ team: { teamName, offense, players } }) => {
 
       <h1>On Court</h1>
       <OnCourt>
-        {players.map((player, i) => {
-          if (i < 6) {
-            return (
-              <Player
-                key={i}
-                swappable={player.swappable}
-                id={player.id}
-                position={player.position}
-                style={{
-                  transform: `translate(${state[i].x}px, ${state[i].y}px)`
-                }}>
-                <button onClick={() => handleDelete(player.id)}>X</button>
-                {player.name}, {player.gender}
-                <p>{handlePosition(player.position)}</p>
-              </Player>
-            );
-          }
-        })}
+        {players.map((player, i) => (
+          <Player
+            key={i}
+            swappable={player.swappable}
+            id={player.id}
+            position={player.position}
+            style={{
+              transform: `translate(${state[i].x}px, ${state[i].y}px)`
+            }}>
+            <button onClick={() => handleDelete(player.id)}>X</button>
+            {player.name}, {player.gender}
+            <p>{handlePosition(player.position)}</p>
+          </Player>
+        ))}
       </OnCourt>
       <OnBench>
         <h2>On Bench</h2>
         <BenchList>
-          {players.map((player, i) => {
-            if (i > 5) {
-              return (
-                <li>
-                  <BenchPlayer
-                    key={i}
-                    swappable={player.swappable}
-                    id={player.id}
-                    position={player.position}>
-                    <button onClick={() => handleDelete(player.id)}>X</button>
-                    {player.name}, {player.gender}
-                    <p>{handlePosition(player.position)}</p>
-                  </BenchPlayer>
-                </li>
-              );
-            }
-          })}
+          {playersOnBench.map((player, i) => (
+            <li key={i}>
+              <BenchPlayer
+                swappable={player.swappable}
+                id={player.id}
+                gender={player.gender}>
+                <button onClick={() => handleBenchDelete(player.id)}>X</button>
+                <p>
+                  {player.name}, {player.gender}
+                </p>
+              </BenchPlayer>
+            </li>
+          ))}
         </BenchList>
       </OnBench>
 

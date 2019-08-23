@@ -20,7 +20,7 @@ const App = () => {
         id: "1",
         gender: "m",
         position: "s",
-        swappable: false,
+        swappable: true,
         str: "",
         weak: ""
       },
@@ -68,14 +68,14 @@ const App = () => {
         swappable: true,
         str: "",
         weak: ""
-      },
-      ,
+      }
+    ],
+    playersOnBench: [
       {
-        name: "New Guy",
-        id: "7",
-        gender: "m",
-        position: "mh",
+        name: "Noah",
         swappable: true,
+        id: 7,
+        gender: "m",
         str: "",
         weak: ""
       }

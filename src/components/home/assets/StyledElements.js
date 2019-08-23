@@ -37,7 +37,9 @@ export const Player = styled.div`
   display: flex;
   position: relative;
   flex-direction: column;
-  border: 1px solid #000;
+  border-width: ${props => (props.swappable ? "1px" : "3px")};
+  border-style: solid;
+  border-color: ${props => (props.swappable ? "#000" : "red")};
   padding: 2em;
   color: ${props => (props.swappable ? "#fffadd" : "#ffffff")};
   margin: 0 auto;
@@ -96,7 +98,7 @@ export const BenchPlayer = styled.div`
   border-right: 2px solid #000;
   padding: 0.2em;
   color: ${props => (props.swappable ? "#fffadd" : "#ffffff")};
-  background-color: ${props => positionColor(props.position)};
+  background-color: #3cbcc3;
   transition: all 0.6s ease-in-out;
   p {
     margin: 0;

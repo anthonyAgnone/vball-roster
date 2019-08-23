@@ -39,7 +39,7 @@ const TeamSetup = ({ dispatch, team }) => {
   };
 
   const DragHandle = sortableHandle(() => (
-    <p class="handle">
+    <p className="handle">
       <FontAwesomeIcon icon="volleyball-ball" />
     </p>
   ));
@@ -86,7 +86,6 @@ const TeamSetup = ({ dispatch, team }) => {
           type="text"
           placeholder="Change Team Name"
           onChange={handleOnChange}
-          type="text"
           id="name"
           name="name"
         />
