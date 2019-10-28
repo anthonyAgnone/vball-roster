@@ -5,7 +5,7 @@ import TeamReducer from "./context/TeamReducer";
 import AppReducer from "./context/AppReducer";
 import TeamManagement from "./components/teamManagement/TeamManagement";
 
-import "./global.css";
+import GlobalStyle from "./GlobalStyle";
 
 export const TeamDispatch = createContext(null);
 export const AppDispatch = createContext(null);
@@ -70,16 +70,7 @@ const App = () => {
         weak: ""
       }
     ],
-    playersOnBench: [
-      {
-        name: "Noah",
-        swappable: true,
-        id: 7,
-        gender: "m",
-        str: "",
-        weak: ""
-      }
-    ]
+    playersOnBench: []
   });
   const [app, appDispatch] = useReducer(AppReducer, {
     user: "",
@@ -88,6 +79,7 @@ const App = () => {
 
   return (
     <div className="app">
+      <GlobalStyle />
       <AppDispatch.Provider value={appDispatch}>
         <TeamDispatch.Provider value={teamDispatch}>
           <TeamManagement team={team} app={app} />

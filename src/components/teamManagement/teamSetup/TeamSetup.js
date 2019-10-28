@@ -5,7 +5,7 @@ import {
   sortableHandle
 } from "react-sortable-hoc";
 import arrayMove from "array-move";
-import { SetupDiv, ListItem } from "./assets/StyledElements";
+import { SetupDiv, ListItem, TeamForm } from "./assets/StyledElements";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const TeamSetup = ({ dispatch, team }) => {
@@ -55,7 +55,7 @@ const TeamSetup = ({ dispatch, team }) => {
 
   const SortableList = SortableContainer(({ items }) => {
     return (
-      <ul>
+      <ul style={{ padding: 0 }}>
         {items.map((value, index) => (
           <SortableItem
             key={`item-${index}`}
@@ -81,7 +81,7 @@ const TeamSetup = ({ dispatch, team }) => {
   return (
     <SetupDiv>
       <h1>Team Setup</h1>
-      <form onSubmit={handleOnSubmit}>
+      <TeamForm onSubmit={handleOnSubmit}>
         <input
           type="text"
           placeholder="Change Team Name"
@@ -96,7 +96,7 @@ const TeamSetup = ({ dispatch, team }) => {
           <option value="62">62</option>
         </select>
         <input type="submit" value="Submit Team" />
-      </form>
+      </TeamForm>
       <h2>Player list</h2>
       <SortableList items={team.players} onSortEnd={onSortEnd} useDragHandle />
     </SetupDiv>

@@ -4,9 +4,12 @@ import {
   OnCourt,
   Player,
   BenchList,
-  BenchPlayer
+  BenchPlayer,
+  TeamInfo,
+  Controls
 } from "./assets/StyledElements";
 import { TeamDispatch } from "../../App";
+import { rotationOne, rotationTwo, rotationThree } from "../../util/Rotations";
 
 const Home = ({ team: { teamName, offense, players, playersOnBench } }) => {
   const dispatch = useContext(TeamDispatch);
@@ -21,63 +24,6 @@ const Home = ({ team: { teamName, offense, players, playersOnBench } }) => {
   ]);
 
   const [rotation, setRotation] = useState(0);
-
-  const rotationOne = [
-    [
-      { x: -40, y: -20 },
-      { x: -270, y: 150 },
-      { x: -290, y: 150 },
-      { x: -20, y: -50 },
-      { x: 130, y: 70 },
-      { x: 160, y: 70 }
-    ],
-    [
-      { x: 500, y: -20 },
-      { x: -340, y: 100 },
-      { x: -340, y: 100 },
-      { x: -20, y: -50 },
-      { x: 130, y: 70 },
-      { x: 160, y: 70 }
-    ]
-  ];
-
-  const rotationTwo = [
-    [
-      { x: -20, y: 130 },
-      { x: -150, y: 0 },
-      { x: -290, y: 130 },
-      { x: 0, y: -75 },
-      { x: 160, y: 80 },
-      { x: 150, y: 80 }
-    ],
-    [
-      { x: -30, y: 80 },
-      { x: 200, y: 0 },
-      { x: -340, y: 0 },
-      { x: 50, y: -50 },
-      { x: 200, y: 80 },
-      { x: 160, y: 80 }
-    ]
-  ];
-
-  const rotationThree = [
-    [
-      { x: 0, y: 140 },
-      { x: 0, y: 140 },
-      { x: 20, y: -15 },
-      { x: 0, y: -60 },
-      { x: 150, y: 70 },
-      { x: 140, y: 70 }
-    ],
-    [
-      { x: -40, y: 100 },
-      { x: -40, y: 100 },
-      { x: -130, y: 0 },
-      { x: 0, y: -60 },
-      { x: 150, y: 70 },
-      { x: 140, y: 70 }
-    ]
-  ];
 
   const handleUpdateState = val => {
     let initialState = [...state];
@@ -150,11 +96,12 @@ const Home = ({ team: { teamName, offense, players, playersOnBench } }) => {
 
   return (
     <div>
-      <h1>{teamName ? teamName : "Enter Team Name"}</h1>
-      <h2>{currentOffense}</h2>
-      <h3>Rotation {rotation + 1}</h3>
+      <TeamInfo>
+        <h1>{teamName ? teamName : "Enter Team Name"}</h1>
+        <h2>{currentOffense}</h2>
+        <h3>Rotation {rotation + 1}</h3>
+      </TeamInfo>
 
-      <h1>On Court</h1>
       <OnCourt>
         {players.map((player, i) => (
           <Player
@@ -166,13 +113,14 @@ const Home = ({ team: { teamName, offense, players, playersOnBench } }) => {
               transform: `translate(${state[i].x}px, ${state[i].y}px)`
             }}>
             <button onClick={() => handleDelete(player.id)}>X</button>
-            {player.name}, {player.gender}
+            <p>
+              {player.name}, {player.gender}
+            </p>
             <p>{handlePosition(player.position)}</p>
           </Player>
         ))}
       </OnCourt>
       <OnBench>
-        <h2>On Bench</h2>
         <BenchList>
           {playersOnBench.map((player, i) => (
             <li key={i}>
@@ -190,12 +138,12 @@ const Home = ({ team: { teamName, offense, players, playersOnBench } }) => {
         </BenchList>
       </OnBench>
 
-      <div>
+      <Controls>
         <button onClick={() => handleUpdateState(0)}>Positions Only</button>
         <button onClick={() => handleUpdateState(1)}>Pre Contact</button>
         <button onClick={() => handleUpdateState(2)}>On Contact</button>
         <button onClick={handleRotate}>Rotate Players</button>
-      </div>
+      </Controls>
     </div>
   );
 };

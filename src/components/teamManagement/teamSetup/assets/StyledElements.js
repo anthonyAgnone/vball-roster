@@ -17,10 +17,17 @@ const positionColor = pos => {
   }
 };
 
+export const TeamForm = styled.form`
+  width: 100%;
+  padding: 1em 0;
+  display: flex;
+  flex-direction: column;
+`;
+
 export const ListItem = styled.li`
   width: 100%;
   list-style: none;
-  height: 2em;
+  height: 3em;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   align-items: center;

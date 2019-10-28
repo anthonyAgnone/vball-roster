@@ -26,8 +26,7 @@ export default (state, action) => {
       let tempArray = [...state.players];
       tempArray.unshift(tempArray.pop());
       const rotateOut = tempArray[3];
-      console.log(rotateOut);
-      if (rotateOut.swappable) {
+      if (rotateOut.swappable && state.playersOnBench.length > 0) {
         const tempBenchArray = [...state.playersOnBench];
         const rotateIn = tempBenchArray[0];
         rotateIn.position = rotateOut.position;
