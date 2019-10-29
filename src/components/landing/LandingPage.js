@@ -8,8 +8,9 @@ const LandingPage = () => {
   return (
     <LandingWrapper>
       <Header img={net}>
-        <h1>Volleyball Roster and Rotation App</h1>
-        <button onClick={() => setState(!state)}>Login/Sign Up</button>
+        <h1>Manage Your Championship</h1>
+        <p>Opportunity does not waste time with those who are unprepared. Take your team to the next level and make this season your best.</p>
+        <button onClick={() => setState(!state)}>Start Today</button>
       </Header>
     </LandingWrapper>
   )

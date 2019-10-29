@@ -1,6 +1,9 @@
 import React, { useContext, useState, useEffect } from "react";
 
+import { db } from '../../base'
+
 import { TeamContext } from '../../context/TeamContext'
+import { AuthContext } from '../../context/Auth'
 
 import {
   OnBench,
@@ -28,8 +31,11 @@ const Home = () => {
     team,
     removePlayer,
     removeBenchPlayer,
-    rotatePlayers
+    rotatePlayers,
+    setTeam
   } = useContext(TeamContext);
+
+  const { currentUser } = useContext(AuthContext)
 
   const [courtPositions, setCourtPositions] = useState([])
 
@@ -64,6 +70,15 @@ const Home = () => {
     // eslint-disable-next-line
   }, [rotation])
 
+  useEffect(() => {
+    db.collection("teams").get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        if (doc.id === currentUser.uid) setTeam(doc.data())
+      });
+    });
+    return
+  }, [])
+
   const handlePosition = val => {
     switch (val) {
       case "s":
@@ -97,7 +112,7 @@ const Home = () => {
   return (
     <div>
       <TeamInfo>
-        <h1>{team.teamName ? team.teamName : "Enter Team Name"}</h1>
+        <h1>{team.teamName ? team.teamName : `${currentUser.email.split('@')[0]}'s Team`}</h1>
         <h2>{currentOffense}</h2>
         <h3>Rotation {rotation + 1}</h3>
       </TeamInfo>

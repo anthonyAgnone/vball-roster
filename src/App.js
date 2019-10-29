@@ -1,5 +1,5 @@
 import React, { createContext } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import LandingPage from './components/landing/LandingPage'
 import Home from "./components/home/Home";
 import TeamManagement from "./components/teamManagement/TeamManagement";
@@ -9,6 +9,7 @@ import GlobalStyle from "./GlobalStyle";
 import { AuthProvider } from "./context/Auth";
 import { TeamContextProvider } from './context/TeamContext'
 import { AppProvider } from "./context/AppContext";
+import PrivateRoute from "./components/PrivateRoute";
 
 export const AppDispatch = createContext(null);
 
@@ -20,10 +21,12 @@ const App = () => {
       <AppProvider>
         <AuthProvider>
           <TeamContextProvider>
-            <TeamManagement />
             <Router>
-              <Route exact path="/" component={LandingPage} />
-              <Route exact path="/home" component={Home} />
+              <TeamManagement />
+              <Switch>
+                <PrivateRoute exact path="/" component={Home} reRouteComponent={LandingPage} />
+                <Route path="/welcome" component={LandingPage} />
+              </Switch>
             </Router>
           </TeamContextProvider>
         </AuthProvider>

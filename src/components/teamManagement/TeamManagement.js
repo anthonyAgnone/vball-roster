@@ -10,6 +10,7 @@ import { TeamDiv } from "./assets/StyledComponents";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faIdBadge, faVolleyballBall } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import LogSign from "../LogSign";
 
 library.add(faIdBadge, faVolleyballBall);
 
@@ -32,8 +33,7 @@ const TeamManagement = () => {
         <button onClick={handleSignout}>Sign Out</button>
       </React.Fragment>}
       {!currentUser && <React.Fragment>
-        <p>Login</p>
-        <p>Sign Up</p>
+        <LogSign />
       </React.Fragment>}
     </TeamDiv>
   );

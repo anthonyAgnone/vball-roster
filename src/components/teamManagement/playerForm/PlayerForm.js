@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { AddPlayerForm } from "./assets/StyledElements";
+import { TeamContext } from '../../../context/TeamContext'
 
-const PlayerForm = ({ dispatch }) => {
+const PlayerForm = () => {
+  const { addPlayer } = useContext(TeamContext)
   const [form, setForm] = useState({
     name: "",
     id: "",
@@ -14,15 +16,7 @@ const PlayerForm = ({ dispatch }) => {
 
   const handleAddPlayer = e => {
     e.preventDefault();
-    if (form.name.length > 0 && form.gender.length > 0) {
-      dispatch({
-        type: "ADD_PLAYER",
-        payload: {
-          ...form,
-          id: form.name.slice(0, 2) + generateRandomID(5)
-        }
-      });
-    }
+    if (form.name.length > 0 && form.gender.length > 0) addPlayer({ ...form, id: form.name.slice(0, 2) + generateRandomID(5) })
   };
 
   const handleChange = e => {
@@ -32,7 +26,7 @@ const PlayerForm = ({ dispatch }) => {
     const name = e.target.name;
     setForm(form => ({
       ...form,
-      [name]: value
+      [name]: value,
     }));
   };
 

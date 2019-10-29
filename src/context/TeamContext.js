@@ -1,69 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
+import { db } from '../base'
+import { AuthContext } from "./Auth";
 
 export const TeamContext = React.createContext()
 
 export const TeamContextProvider = ({ children }) => {
+  const { currentUser } = useContext(AuthContext);
   const [team, setTeam] = useState({
     teamName: "",
-    offense: "i42",
-    players: [
-      {
-        name: "Bridget",
-        id: "3",
-        gender: "f",
-        position: "oh",
-        swappable: false,
-        str: "",
-        weak: ""
-      },
-      {
-        name: "Anthony",
-        id: "1",
-        gender: "m",
-        position: "s",
-        swappable: true,
-        str: "",
-        weak: ""
-      },
-      {
-        name: "Nephier",
-        id: "2",
-        gender: "m",
-        position: "mh",
-        swappable: true,
-        str: "",
-        weak: ""
-      },
-      {
-        name: "Jon K",
-        id: "5",
-        gender: "m",
-        position: "oh",
-        swappable: true,
-        str: "",
-        weak: ""
-      },
-
-      {
-        name: "Serena",
-        id: "4",
-        gender: "f",
-        position: "s",
-        swappable: false,
-        str: "",
-        weak: ""
-      },
-
-      {
-        name: "Jon L",
-        id: "6",
-        gender: "m",
-        position: "mh",
-        swappable: true,
-        str: "",
-        weak: ""
-      }
-    ],
+    offense: "",
+    players: [],
     playersOnBench: []
   })
 
@@ -73,11 +19,11 @@ export const TeamContextProvider = ({ children }) => {
 
   const addPlayer = player => {
     if (team.players.length > 5) {
-      const tempBenchPlayer = [team.playersOnBench, player]
+      const tempBenchPlayer = [...team.playersOnBench, player]
       setTeam({ ...team, playersOnBench: tempBenchPlayer })
       return
     }
-    const tempPlayer = [team.players, player]
+    const tempPlayer = [...team.players, player]
     setTeam({ ...team, players: tempPlayer })
   }
 
@@ -117,6 +63,11 @@ export const TeamContextProvider = ({ children }) => {
     setTeam({ ...team, players: tempArray })
   }
 
+  useEffect(() => {
+    if (currentUser != null) db.collection("teams").doc(currentUser.uid).set(team)
+    return
+  }, [team])
+
   return (
     <TeamContext.Provider
       value={{
@@ -126,7 +77,8 @@ export const TeamContextProvider = ({ children }) => {
         removePlayer,
         removeBenchPlayer,
         reorderPlayers,
-        rotatePlayers
+        rotatePlayers,
+        setTeam
       }}>
       {children}
     </TeamContext.Provider>
