@@ -4,6 +4,7 @@ import Home from "./components/home/Home";
 import TeamReducer from "./context/TeamReducer";
 import AppReducer from "./context/AppReducer";
 import TeamManagement from "./components/teamManagement/TeamManagement";
+import { currentTeam } from './components/teamManagement/teamSetup/team'
 
 import GlobalStyle from "./GlobalStyle";
 
@@ -11,67 +12,7 @@ export const TeamDispatch = createContext(null);
 export const AppDispatch = createContext(null);
 
 const App = () => {
-  const [team, teamDispatch] = useReducer(TeamReducer, {
-    teamName: "",
-    offense: "i42",
-    players: [
-      {
-        name: "Anthony",
-        id: "1",
-        gender: "m",
-        position: "s",
-        swappable: true,
-        str: "",
-        weak: ""
-      },
-      {
-        name: "Nephier",
-        id: "2",
-        gender: "m",
-        position: "mh",
-        swappable: true,
-        str: "",
-        weak: ""
-      },
-      {
-        name: "Bridget",
-        id: "3",
-        gender: "f",
-        position: "oh",
-        swappable: false,
-        str: "",
-        weak: ""
-      },
-      {
-        name: "Serena",
-        id: "4",
-        gender: "f",
-        position: "s",
-        swappable: false,
-        str: "",
-        weak: ""
-      },
-      {
-        name: "Jon",
-        id: "5",
-        gender: "m",
-        position: "mh",
-        swappable: true,
-        str: "",
-        weak: ""
-      },
-      {
-        name: "Ted",
-        id: "6",
-        gender: "m",
-        position: "oh",
-        swappable: true,
-        str: "",
-        weak: ""
-      }
-    ],
-    playersOnBench: []
-  });
+  const [team, teamDispatch] = useReducer(TeamReducer, currentTeam);
   const [app, appDispatch] = useReducer(AppReducer, {
     user: "",
     isOpen: false

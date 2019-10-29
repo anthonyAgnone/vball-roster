@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
   OnBench,
   OnCourt,
@@ -9,46 +9,44 @@ import {
   Controls
 } from "./assets/StyledElements";
 import { TeamDispatch } from "../../App";
-import { rotationOne, rotationTwo, rotationThree } from "../../util/Rotations";
+import { rotationOne, rotationTwo, rotationThree } from "../../util/i42Rotations";
+
+const resetState = [
+  { x: 0, y: 0 },
+  { x: 0, y: 0 },
+  { x: 0, y: 0 },
+  { x: 0, y: 0 },
+  { x: 0, y: 0 },
+  { x: 0, y: 0 }
+]
 
 const Home = ({ team: { teamName, offense, players, playersOnBench } }) => {
   const dispatch = useContext(TeamDispatch);
+  const [courtPositions, setCourtPositions] = useState([])
 
-  const [state, changeState] = useState([
-    { x: 0, y: 0 },
-    { x: 0, y: 0 },
-    { x: 0, y: 0 },
-    { x: 0, y: 0 },
-    { x: 0, y: 0 },
-    { x: 0, y: 0 }
-  ]);
+  const [state, changeState] = useState(resetState);
 
   const [rotation, setRotation] = useState(0);
 
-  const handleUpdateState = val => {
-    let initialState = [...state];
-    switch (val) {
-      case 0:
-        initialState.forEach((el, i) => {
-          el.x = 0;
-          el.y = 0;
-        });
-        changeState(initialState);
-        break;
-      case 1:
-        if (rotation === 0 || rotation === 3) changeState(rotationOne[0]);
-        else if (rotation === 1 || rotation === 4) changeState(rotationTwo[0]);
-        else changeState(rotationThree[0]);
-        break;
-      case 2:
-        if (rotation === 0 || rotation === 3) changeState(rotationOne[1]);
-        else if (rotation === 1 || rotation === 4) changeState(rotationTwo[1]);
-        else changeState(rotationThree[1]);
-        break;
-      default:
-        return val;
-    }
-  };
+  const isSetter = (el) => {
+    return el.position === 's'
+  }
+
+  const findSetter = () => {
+    return players.findIndex(isSetter)
+  }
+
+  useEffect(() => {
+    //New effect for choosing the correct file based on incoming offense
+    //probably need a new system of holding rotations. Json maybe
+    const allRotations = [rotationOne, rotationTwo, rotationThree]
+    setCourtPositions(allRotations[findSetter()])
+    return
+  }, [rotation])
+
+  const resetPositions = () => {
+    changeState(resetState)
+  }
 
   const handleDelete = i => {
     dispatch({ type: "REMOVE_PLAYER", payload: i });
@@ -103,7 +101,7 @@ const Home = ({ team: { teamName, offense, players, playersOnBench } }) => {
       </TeamInfo>
 
       <OnCourt>
-        {players.map((player, i) => (
+        {players && players.map((player, i) => (
           <Player
             key={i}
             swappable={player.swappable}
@@ -122,7 +120,7 @@ const Home = ({ team: { teamName, offense, players, playersOnBench } }) => {
       </OnCourt>
       <OnBench>
         <BenchList>
-          {playersOnBench.map((player, i) => (
+          {playersOnBench && playersOnBench.map((player, i) => (
             <li key={i}>
               <BenchPlayer
                 swappable={player.swappable}
@@ -139,9 +137,9 @@ const Home = ({ team: { teamName, offense, players, playersOnBench } }) => {
       </OnBench>
 
       <Controls>
-        <button onClick={() => handleUpdateState(0)}>Positions Only</button>
-        <button onClick={() => handleUpdateState(1)}>Pre Contact</button>
-        <button onClick={() => handleUpdateState(2)}>On Contact</button>
+        <button onClick={() => resetPositions()}>Positions Only</button>
+        <button onClick={() => changeState(courtPositions[0])}>Pre Contact</button>
+        <button onClick={() => changeState(courtPositions[1])}>On Contact</button>
         <button onClick={handleRotate}>Rotate Players</button>
       </Controls>
     </div>

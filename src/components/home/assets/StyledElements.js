@@ -11,7 +11,7 @@ export const TeamInfo = styled.div`
 `;
 
 export const Controls = styled.div`
-  width: 100vh;
+  width: 900px;
   height: 10vh;
   position: absolute;
   bottom: 0;
@@ -33,8 +33,8 @@ export const Controls = styled.div`
 `;
 
 export const OnCourt = styled.div`
-  width: 100vh;
-  height: 80vh;
+  width: 900px;
+  height: 900px;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -89,8 +89,8 @@ export const Player = styled.div`
   border-radius: 50%;
   background-color: ${props => positionColor(props.position)};
   transition: all 0.6s ease-in-out;
-  height: 50%;
-  width: auto;
+  height: 175px;
+  width: 175px;
   min-width: 100px;
   p {
     margin: 0;
