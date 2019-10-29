@@ -1,4 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
+
+import { TeamContext } from '../../context/TeamContext'
+
 import {
   OnBench,
   OnCourt,
@@ -8,7 +11,7 @@ import {
   TeamInfo,
   Controls
 } from "./assets/StyledElements";
-import { TeamDispatch } from "../../App";
+
 import { rotationOne, rotationTwo, rotationThree } from "../../util/i42Rotations";
 
 const resetState = [
@@ -20,8 +23,14 @@ const resetState = [
   { x: 0, y: 0 }
 ]
 
-const Home = ({ team: { teamName, offense, players, playersOnBench } }) => {
-  const dispatch = useContext(TeamDispatch);
+const Home = () => {
+  const {
+    team,
+    removePlayer,
+    removeBenchPlayer,
+    rotatePlayers
+  } = useContext(TeamContext);
+
   const [courtPositions, setCourtPositions] = useState([])
 
   const [state, changeState] = useState(resetState);
@@ -33,8 +42,18 @@ const Home = ({ team: { teamName, offense, players, playersOnBench } }) => {
   }
 
   const findSetter = () => {
-    return players.findIndex(isSetter)
+    return team.players.findIndex(isSetter)
   }
+
+  const resetPositions = () => {
+    changeState(resetState)
+  }
+
+  const handleRotate = () => {
+    rotatePlayers()
+    if (rotation === 5) setRotation(0);
+    else setRotation(rotation + 1);
+  };
 
   useEffect(() => {
     //New effect for choosing the correct file based on incoming offense
@@ -42,25 +61,8 @@ const Home = ({ team: { teamName, offense, players, playersOnBench } }) => {
     const allRotations = [rotationOne, rotationTwo, rotationThree]
     setCourtPositions(allRotations[findSetter()])
     return
+    // eslint-disable-next-line
   }, [rotation])
-
-  const resetPositions = () => {
-    changeState(resetState)
-  }
-
-  const handleDelete = i => {
-    dispatch({ type: "REMOVE_PLAYER", payload: i });
-  };
-
-  const handleBenchDelete = i => {
-    dispatch({ type: "REMOVE_BENCH_PLAYER", payload: i });
-  };
-
-  const handleRotate = () => {
-    dispatch({ type: "ROTATE_PLAYERS" });
-    if (rotation === 5) setRotation(0);
-    else setRotation(rotation + 1);
-  };
 
   const handlePosition = val => {
     switch (val) {
@@ -90,18 +92,18 @@ const Home = ({ team: { teamName, offense, players, playersOnBench } }) => {
     }
   };
 
-  const currentOffense = handleOffense(offense);
+  const currentOffense = handleOffense(team.offense);
 
   return (
     <div>
       <TeamInfo>
-        <h1>{teamName ? teamName : "Enter Team Name"}</h1>
+        <h1>{team.teamName ? team.teamName : "Enter Team Name"}</h1>
         <h2>{currentOffense}</h2>
         <h3>Rotation {rotation + 1}</h3>
       </TeamInfo>
 
       <OnCourt>
-        {players && players.map((player, i) => (
+        {team.players && team.players.map((player, i) => (
           <Player
             key={i}
             swappable={player.swappable}
@@ -110,7 +112,7 @@ const Home = ({ team: { teamName, offense, players, playersOnBench } }) => {
             style={{
               transform: `translate(${state[i].x}px, ${state[i].y}px)`
             }}>
-            <button onClick={() => handleDelete(player.id)}>X</button>
+            <button onClick={() => removePlayer(player.id)}>X</button>
             <p>
               {player.name}, {player.gender}
             </p>
@@ -120,13 +122,13 @@ const Home = ({ team: { teamName, offense, players, playersOnBench } }) => {
       </OnCourt>
       <OnBench>
         <BenchList>
-          {playersOnBench && playersOnBench.map((player, i) => (
+          {team.playersOnBench && team.playersOnBench.map((player, i) => (
             <li key={i}>
               <BenchPlayer
                 swappable={player.swappable}
                 id={player.id}
                 gender={player.gender}>
-                <button onClick={() => handleBenchDelete(player.id)}>X</button>
+                <button onClick={() => removeBenchPlayer(player.id)}>X</button>
                 <p>
                   {player.name}, {player.gender}
                 </p>

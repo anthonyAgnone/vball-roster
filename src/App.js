@@ -1,36 +1,33 @@
-import React, { createContext, useReducer } from "react";
-import { Route, Switch } from "react-router-dom";
+import React, { createContext } from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import LandingPage from './components/landing/LandingPage'
 import Home from "./components/home/Home";
-import TeamReducer from "./context/TeamReducer";
-import AppReducer from "./context/AppReducer";
 import TeamManagement from "./components/teamManagement/TeamManagement";
-import { currentTeam } from './components/teamManagement/teamSetup/team'
 
 import GlobalStyle from "./GlobalStyle";
 
-export const TeamDispatch = createContext(null);
+import { AuthProvider } from "./context/Auth";
+import { TeamContextProvider } from './context/TeamContext'
+import { AppProvider } from "./context/AppContext";
+
 export const AppDispatch = createContext(null);
 
 const App = () => {
-  const [team, teamDispatch] = useReducer(TeamReducer, currentTeam);
-  const [app, appDispatch] = useReducer(AppReducer, {
-    user: "",
-    isOpen: false
-  });
 
   return (
     <div className="app">
       <GlobalStyle />
-      <AppDispatch.Provider value={appDispatch}>
-        <TeamDispatch.Provider value={teamDispatch}>
-          <TeamManagement team={team} app={app} />
-          <Switch>
-            <Route path="/" exact>
-              {({ match }) => <Home team={team} show={match !== null} />}
-            </Route>
-          </Switch>
-        </TeamDispatch.Provider>
-      </AppDispatch.Provider>
+      <AppProvider>
+        <AuthProvider>
+          <TeamContextProvider>
+            <TeamManagement />
+            <Router>
+              <Route exact path="/" component={LandingPage} />
+              <Route exact path="/home" component={Home} />
+            </Router>
+          </TeamContextProvider>
+        </AuthProvider>
+      </AppProvider>
     </div>
   );
 };

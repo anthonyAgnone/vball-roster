@@ -12,6 +12,7 @@ export const TeamDiv = styled.div`
   flex-direction: column;
   width: 20vw;
   padding: 0 1em;
+  z-index: 9999;
   .menuOpen {
     position: absolute;
     top: 0;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   SortableContainer,
   SortableElement,
@@ -8,7 +8,11 @@ import arrayMove from "array-move";
 import { SetupDiv, ListItem, TeamForm } from "./assets/StyledElements";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const TeamSetup = ({ dispatch, team }) => {
+import { TeamContext } from '../../../context/TeamContext'
+
+const TeamSetup = () => {
+  const { team, changeTeam, reorderPlayers } = useContext(TeamContext)
+
   const [form, setForm] = useState({
     name: team.teamName,
     offense: team.offense,
@@ -28,14 +32,7 @@ const TeamSetup = ({ dispatch, team }) => {
 
   const handleOnSubmit = e => {
     e.preventDefault();
-    dispatch({
-      type: "CHANGE_TEAM",
-      payload: {
-        teamName: form.name,
-        offense: form.offense,
-        players: team.players
-      }
-    });
+    changeTeam(form)
   };
 
   const DragHandle = sortableHandle(() => (
@@ -71,11 +68,7 @@ const TeamSetup = ({ dispatch, team }) => {
 
   const onSortEnd = ({ oldIndex, newIndex }) => {
     let tempTeam = team.players;
-    dispatch({
-      type: "REORDER_PLAYER",
-      payload: arrayMove(tempTeam, oldIndex, newIndex)
-    });
-    console.log(oldIndex, newIndex);
+    reorderPlayers(arrayMove(tempTeam, oldIndex, newIndex))
   };
 
   return (
