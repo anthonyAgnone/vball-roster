@@ -14,8 +14,8 @@ const LogSign = ({ history }) => {
   return (
     <LoggedOut>
       <TabGroup>
-        <button className={!isLog && 'active'} onClick={() => setIsLog(false)}>Sign Up</button>
-        <button className={isLog && 'active'} onClick={() => setIsLog(true)}>Log In</button>
+        <button className={isLog ? '' : 'active'} onClick={() => setIsLog(false)}>Sign Up</button>
+        <button className={isLog ? 'active' : ''} onClick={() => setIsLog(true)}>Log In</button>
       </TabGroup>
       {
         isLog && <Login isActive={isActive} history={history} />

@@ -26,7 +26,7 @@ export const TabGroup = styled.div`
   }
 `
 
-export const LogSignForm = styled.div`
+export const LogSignForm = styled.form`
   width: 100%;
   display: flex;
   flex-direction: column;

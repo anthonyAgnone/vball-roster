@@ -2,14 +2,15 @@ import React, { useCallback, useContext } from "react";
 import { Redirect } from "react-router";
 import app from "../base.js";
 import { LogSignForm } from './StyledComponents'
-import { TeamContext } from '../context/TeamContext'
 import { AuthContext } from "../context/Auth";
 
 const Login = ({ isActive, history }) => {
+  const { currentUser, setCurrentUser } = useContext(AuthContext);
   const handleLogin = useCallback(
     async event => {
       event.preventDefault();
       const { email, password } = event.target.elements;
+      setCurrentUser(null)
       try {
         await app
           .auth()
@@ -21,9 +22,6 @@ const Login = ({ isActive, history }) => {
     },
     [history]
   );
-
-  const { currentUser } = useContext(AuthContext);
-  const { changeTeam } = useContext(TeamContext)
 
   if (currentUser) {
     return <Redirect to="/" />;
