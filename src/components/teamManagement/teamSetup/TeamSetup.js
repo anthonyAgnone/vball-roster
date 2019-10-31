@@ -11,29 +11,23 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { TeamContext } from '../../../context/TeamContext'
 
 const TeamSetup = () => {
-  const { team, changeTeam, reorderPlayers } = useContext(TeamContext)
+  const { team, changeOffense, changeName, reorderPlayers } = useContext(TeamContext)
 
-  const [form, setForm] = useState({
-    name: team.teamName,
-    offense: team.offense,
-    tempTeam: team.players
-  });
+  const [newTeamName, setNewTeamName] = useState('');
 
   const handleOnChange = e => {
     e.persist();
-    const target = e.target;
-    const value = target.type === "checkbox" ? target.checked : target.value;
-    const name = e.target.name;
-    setForm(form => ({
-      ...form,
-      [name]: value
-    }));
+    setNewTeamName(e.target.value)
   };
 
   const handleOnSubmit = e => {
     e.preventDefault();
-    changeTeam(form)
+    changeName(newTeamName)
   };
+
+  const handleChangeOffense = e => {
+    changeOffense(e.target.value)
+  }
 
   const DragHandle = sortableHandle(() => (
     <p className="handle">
@@ -53,7 +47,7 @@ const TeamSetup = () => {
   const SortableList = SortableContainer(({ items }) => {
     return (
       <ul style={{ padding: 0 }}>
-        {items.map((value, index) => (
+        {items && items.map((value, index) => (
           <SortableItem
             key={`item-${index}`}
             index={index}
@@ -79,16 +73,18 @@ const TeamSetup = () => {
           type="text"
           placeholder="Change Team Name"
           onChange={handleOnChange}
-          id="name"
-          name="name"
+          id="teamName"
+          name="teamName"
         />
-        <select id="offense" name="offense" onChange={handleOnChange}>
+        <input type="submit" value="Change Name" />
+      </TeamForm>
+      <TeamForm>
+        <select id="offense" name="offense" onChange={handleChangeOffense}>
           <option value="i42">International 4-2</option>
           <option value="t42">Traditional 4-2</option>
           <option value="51">5-1</option>
           <option value="62">62</option>
         </select>
-        <input type="submit" value="Submit Team" />
       </TeamForm>
       <h2>Player list</h2>
       <SortableList items={team.players} onSortEnd={onSortEnd} useDragHandle />

@@ -13,8 +13,12 @@ export const TeamContextProvider = ({ children }) => {
     playersOnBench: []
   })
 
-  const changeTeam = changes => {
-    setTeam(changes)
+  const changeName = changes => {
+    setTeam({ ...team, teamName: changes })
+  }
+
+  const changeOffense = changes => {
+    setTeam({ ...team, offense: changes })
   }
 
   const addPlayer = player => {
@@ -72,13 +76,14 @@ export const TeamContextProvider = ({ children }) => {
     <TeamContext.Provider
       value={{
         team,
-        changeTeam,
+        changeName,
         addPlayer,
         removePlayer,
         removeBenchPlayer,
         reorderPlayers,
         rotatePlayers,
-        setTeam
+        setTeam,
+        changeOffense
       }}>
       {children}
     </TeamContext.Provider>
