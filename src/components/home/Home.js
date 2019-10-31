@@ -55,6 +55,8 @@ const Home = () => {
     changeState(resetState)
   }
 
+  //maybe rotation shouldn't change the database
+
   const handleRotate = () => {
     rotatePlayers()
     if (rotation === 5) setRotation(0);
