@@ -68,7 +68,7 @@ const Home = () => {
     setCourtPositions(allRotations[findSetter()])
     return
     // eslint-disable-next-line
-  }, [rotation])
+  })
 
   useEffect(() => {
     db.collection("teams").get().then((querySnapshot) => {

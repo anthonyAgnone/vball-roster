@@ -53,7 +53,7 @@ export const TeamContextProvider = ({ children }) => {
     let tempArray = [...team.players];
     tempArray.unshift(tempArray.pop());
     const rotateOut = tempArray[3];
-    if (rotateOut.swappable && team.playersOnBench.length > 0) {
+    if (rotateOut && rotateOut.swappable && team.playersOnBench.length > 0) {
       const tempBenchArray = [...team.playersOnBench];
       const rotateIn = tempBenchArray[0];
       rotateIn.position = rotateOut.position;
