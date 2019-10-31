@@ -7,9 +7,9 @@ import ReCAPTCHA from "react-google-recaptcha";
 
 const LogSign = ({ history }) => {
   const [isLog, setIsLog] = useState(true);
-  const [isActive, setIsActive] = useState(true);
+  const [isActive, setIsActive] = useState(false);
   const onChange = (value) => {
-    console.log("Captcha value:", value);
+    if (value) setIsActive(true)
   }
   return (
     <LoggedOut>
@@ -26,7 +26,6 @@ const LogSign = ({ history }) => {
       <ReCAPTCHA
         sitekey="6LcOXsAUAAAAAD6KRsE2ZHnXvJRE58hjeLrBzIDt"
         onChange={onChange}
-        size="compact"
       />
     </LoggedOut>
   );

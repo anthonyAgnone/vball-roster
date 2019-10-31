@@ -1,11 +1,11 @@
 import React, { useCallback, useContext } from "react";
 import { Redirect } from "react-router";
 import app from "../base.js";
-import { db } from '../base.js'
+import { LogSignForm } from './StyledComponents'
 import { TeamContext } from '../context/TeamContext'
 import { AuthContext } from "../context/Auth";
 
-const Login = ({ history }) => {
+const Login = ({ isActive, history }) => {
   const handleLogin = useCallback(
     async event => {
       event.preventDefault();
@@ -32,17 +32,11 @@ const Login = ({ history }) => {
   return (
     <div>
       <h1>Log in</h1>
-      <form onSubmit={handleLogin}>
-        <label>
-          Email
-          <input name="email" type="email" placeholder="Email" />
-        </label>
-        <label>
-          Password
-          <input name="password" type="password" placeholder="Password" />
-        </label>
-        <button type="submit">Log in</button>
-      </form>
+      <LogSignForm onSubmit={handleLogin}>
+        <input name="email" type="email" placeholder="Email" />
+        <input name="password" type="password" placeholder="Password" />
+        <button disabled={!isActive} type="submit">Log in</button>
+      </LogSignForm>
     </div>
   );
 };
